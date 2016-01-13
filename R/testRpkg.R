@@ -1,18 +1,23 @@
-# Hello, world!
-#
-# This is an example function named 'hello' 
-# which prints 'Hello, world!'.
-#
-# You can learn more about package authoring with RStudio at:
-#
-#   http://r-pkgs.had.co.nz/
-#
-# Some useful keyboard shortcuts for package authoring:
-#
-#   Build and Reload Package:  'Ctrl + Shift + B'
-#   Check Package:             'Ctrl + Shift + E'
-#   Test Package:              'Ctrl + Shift + T'
 
-hello <- function() {
-  print("Hello, world!")
+setGeneric("subsetSites",
+           function(object, index){
+             standardGeneric("subsetSites")
+           }
+)
+
+setMethod("subsetSites",
+          signature("DNAStringSet", "integer"),
+          function(object, index){
+            index <- rep.int(list(index), length(object))
+            return(object[index])
+          }
+)
+
+doit <- function() {
+  dna <- DNAStringSet(
+    readDNAMultipleAlignment(
+      filepath = system.file("extdata", "msx2_mRNA.aln",
+                             package="Biostrings"),
+      format="clustal"))
+  subsetSites(dna, 1:50)
 }
