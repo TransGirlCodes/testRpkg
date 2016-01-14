@@ -8,7 +8,7 @@ setGeneric("subsetSites",
 setMethod("subsetSites",
           signature("DNAStringSet", "integer"),
           function(object, index){
-            index <- rep.int(list(index), length(object))
+            index <- rep.int(IntegerList(index), length(object))
             return(object[index])
           }
 )
